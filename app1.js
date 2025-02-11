@@ -1,6 +1,8 @@
 const express=require('express');
- const app=express();
+const morgan = require('morgan')
 
+ const app=express();
+app.use(morgan('dev'))
  app.set('view engine','ejs')
     // app.get('/',(req,res)=>{
     //     res.send("The home page")
@@ -8,14 +10,21 @@ const express=require('express');
 
     //middleware
     app.use((req,res,next)=>{
-        console.log("Time:",Date.now()) ;
-        const a=2
-        const b=4
-        console.log(a+b)
+        console.log("server is running") ;
         return next()
         
     })
-    app.get('/',(req,res)=>{
+    // app.get('/',(req,res)=>{
+    //     res.render('index')
+    // })
+    app.get('/',(req,res,next)=>{
+        const a=5;
+        const b=24;
+        console.log(a+b);
+        next()
+        
+    },
+    (req,res)=>{
         res.render('index')
     })
     app.get('/about',(req,res)=>{
